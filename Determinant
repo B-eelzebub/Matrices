@@ -1,0 +1,40 @@
+# Declare nxn matrix here
+mat = [
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1]
+]
+
+
+# Recursive function to calculate determinant of a matrix
+def determinant(matrix):
+    # Base case when we have 2x2 matrix
+    if len(matrix[0]) == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    # Recursive case
+    else:
+        ans = 0
+        for i in range(len(matrix)):
+            temp = (-1) ** i * matrix[i][0] * determinant(minor(matrix, i, 0))
+            ans += temp
+        return ans
+
+# Find the minor of a matrix and hence use it to calculate determinant
+def minor(matrix, a, b):
+    new_mat = []
+    new_row = []
+    for i in range(len(matrix)):
+        if i != a:
+            for j in range(len(matrix[0])):
+                if j != b:
+                    new_row.append(matrix[i][j])
+            new_mat.append(new_row)
+            new_row = []
+    for i in new_mat:
+        print(i)
+    print()
+    return new_mat
+
+
+print(determinant(mat))
